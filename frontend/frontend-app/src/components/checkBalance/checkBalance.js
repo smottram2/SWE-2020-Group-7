@@ -1,14 +1,12 @@
 import React from 'react';
-import './checkBalance.css';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import './CheckBalance.css';
 
-const checkBalance = () => (
-    <div className="checkBalance">
+const CheckBalance = () => (
+    <div className="CheckBalance">
       wefwefewfwfwfwfwfew
       <div>fwef<div>ddsf</div></div>
     </div>
     
   );
   
-  export default checkBalance;
+  export default CheckBalance;

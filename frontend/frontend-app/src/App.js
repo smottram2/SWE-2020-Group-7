@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import checkBalance from './components/checkBalance/checkBalance';
+import CheckBalance from './components/CheckBalance/CheckBalance';
 import {
   BrowserRouter as Router,
   Switch,
@@ -51,9 +51,9 @@ function App() {
               <Register></Register>
             </div>
           </Route>
-          <Route path="/checkBalance">
+          <Route path="/checkbalance">
             <div className="d-flex justify-content-center">
-              <checkBalance></checkBalance>
+              <CheckBalance></CheckBalance>
             </div>
           </Route>
         </Switch>
