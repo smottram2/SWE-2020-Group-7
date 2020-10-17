@@ -1,5 +1,3 @@
-/*eslint-disable*/
-
 import React, { useState } from "react";
 import "./Account.css";
 import Form from "react-bootstrap/Form";
@@ -8,12 +6,8 @@ import Button from "react-bootstrap/Button";
 
 function Account() {
   let [accountType, account_type_change] = useState("Checking");
-  let [accountNumber, account_number_change] = useState("");
-  let [accountBalance, account_balance_change] = useState("");
-
-  function typeChange() {
-    accounttypechange("Saving");
-  }
+  let [accountNumber, account_number_change] = useState("000-000-0000");
+  let [accountBalance, account_balance_change] = useState("$00.00");
 
   return (
     <div className="Account">
@@ -32,11 +26,17 @@ function Account() {
             <option>Saving</option>
           </Form.Control>
         </Form.Group>
+        <Button Variant="priamry" type="submit">
+          Submit
+        </Button>
       </Form>
+      <br></br>
 
       <div>
-        <h1>Your {accountType} Balance is </h1>
-        <Card>
+        <Card border="primary" className="text-center">
+          <Card.Header>
+            Your {accountType} account {accountNumber} Balance is
+          </Card.Header>
           <Card.Body>{accountBalance}</Card.Body>
         </Card>
       </div>
