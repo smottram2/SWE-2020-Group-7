@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import checkBalance from './components/checkBalance/checkBalance';
+import Account from './components/Account/Account';
 import {
   BrowserRouter as Router,
   Switch,
@@ -31,7 +31,7 @@ function App() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/checkBalance">Check Balance</Nav.Link>
+            <Nav.Link href="/Account">Account</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link href="/login">Login</Nav.Link>
@@ -51,9 +51,9 @@ function App() {
               <Register></Register>
             </div>
           </Route>
-          <Route path="/checkBalance">
+          <Route path="/Account">
             <div className="d-flex justify-content-center">
-              <checkBalance></checkBalance>
+              <Account></Account>
             </div>
           </Route>
         </Switch>
