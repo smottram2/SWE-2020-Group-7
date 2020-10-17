@@ -1,17 +1,13 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
-import Account from './components/Account/Account';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+/*eslint-disable*/
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import Account from "./components/Account/Account";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
   return (
