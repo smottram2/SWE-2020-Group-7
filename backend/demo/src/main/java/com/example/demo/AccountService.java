@@ -13,9 +13,7 @@ public class AccountService {
          return accountRepository.findById(name).get();
     }
 
-    
-
-    public void updateAccount(Account account){
-        accountRepository.save(account);
+    public Account updateAccount(String name, Account account){
+        return accountRepository.save(account);
     }
 }

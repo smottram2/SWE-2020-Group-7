@@ -3,8 +3,6 @@ package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 public class AccountController {
 
@@ -16,9 +14,14 @@ public class AccountController {
         return accountService.getAccount(name);
     }
 
-    @PutMapping("/accounts")
+    @PostMapping("/accounts/{name}")
     private String updateAccount(@RequestBody Account account){
-        accountService.updateAccount(account);
+        //accountService.updateAccount(account);
         return account.getName();
+    }
+
+    @PutMapping("/accounts/{name}")
+    public Account updateAccount(@PathVariable("name") String name, @RequestBody Account account){
+        return accountService.updateAccount(name, account);
     }
 }
