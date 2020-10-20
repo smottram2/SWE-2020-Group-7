@@ -14,12 +14,6 @@ public class AccountController {
         return accountService.getAccount(name);
     }
 
-    @PostMapping("/accounts/{name}")
-    private String updateAccount(@RequestBody Account account){
-        //accountService.updateAccount(account);
-        return account.getName();
-    }
-
     @PutMapping("/accounts/{name}")
     public Account updateAccount(@PathVariable("name") String name, @RequestBody Account account){
         return accountService.updateAccount(name, account);
