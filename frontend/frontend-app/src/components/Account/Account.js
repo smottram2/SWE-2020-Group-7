@@ -106,8 +106,10 @@ class Account extends Component {
         <Form onSubmit={this.handleWithdrawal}>
           <Form.Group>
             <Form.Label>Withdraw Money</Form.Label>
-            <Form.Control id="withdrawalAmount" type="number" value={this.state.withdrawalAmount} 
+            <Form.Control id="withdrawalAmount" type="number" 
+                          value={this.state.withdrawalAmount} 
                           placeholder="Enter withdrawal amount"
+                          step="0.01"
                           min="0" 
                           max={this.state.accountBalance}
                           onChange={this.handleChange}/>
