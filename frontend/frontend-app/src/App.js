@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "react-bootstrap/Navbar";
@@ -7,9 +7,17 @@ import Nav from "react-bootstrap/Nav";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Account from "./components/Account/Account";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import { AppContext } from "./libs/contextLib";
 
 function App() {
+  const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const history = useHistory();
+
+  function handleLogout() {
+    userHasAuthenticated(false);
+  } 
+
   return (
     <div>
       <Navbar bg="light" expand="lg" className="mb-4">
@@ -27,33 +35,43 @@ function App() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/Account">Account</Nav.Link>
+            {isAuthenticated
+            ? <Nav.Link href="/accounts">Accounts</Nav.Link>
+            : <></>
+            }
           </Nav>
           <Nav>
-            <Nav.Link href="/login">Login</Nav.Link>
-            <Nav.Link href="/register">Register</Nav.Link>
+            {isAuthenticated
+            ? <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+            : <>
+                    <Nav.Link href="/login">Login</Nav.Link>
+                    <Nav.Link href="/register">Register</Nav.Link>
+              </>
+            }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Router>
-        <Switch>
-          <Route path="/login">
-            <div className="d-flex justify-content-center">
-              <Login></Login>
-            </div>
-          </Route>
-          <Route path="/register">
-            <div className="d-flex justify-content-center">
-              <Register></Register>
-            </div>
-          </Route>
-          <Route path="/Account">
-            <div className="d-flex justify-content-center">
-              <Account></Account>
-            </div>
-          </Route>
-        </Switch>
-      </Router>
+      <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+        <Router>
+          <Switch>
+            <Route path="/login">
+              <div className="d-flex justify-content-center">
+                <Login></Login>
+              </div>
+            </Route>
+            <Route path="/register">
+              <div className="d-flex justify-content-center">
+                <Register></Register>
+              </div>
+            </Route>
+            <Route path="/Account">
+              <div className="d-flex justify-content-center">
+                <Account></Account>
+              </div>
+            </Route>
+          </Switch>
+        </Router>
+      </AppContext.Provider>
     </div>
   );
 }
