@@ -54,21 +54,28 @@ function App() {
       <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
         <Router>
           <Switch>
-            <Route path="/login">
-              <div className="d-flex justify-content-center">
-                <Login></Login>
-              </div>
-            </Route>
-            <Route path="/register">
-              <div className="d-flex justify-content-center">
-                <Register></Register>
-              </div>
-            </Route>
-            <Route path="/Account">
-              <div className="d-flex justify-content-center">
-                <Account></Account>
-              </div>
-            </Route>
+            {isAuthenticated
+              ? <>
+                  <Route path="/accounts">
+                    <div className="d-flex justify-content-center">
+                      <Account></Account>
+                    </div>
+                  </Route>
+                </>
+              : <>
+                  <Route path="/login">
+                    <div className="d-flex justify-content-center">
+                      <Login></Login>
+                    </div>
+                  </Route>
+                  <Route path="/register">
+                    <div className="d-flex justify-content-center">
+                      <Register></Register>
+                    </div>
+                  </Route>
+                </>  
+            }
+            
           </Switch>
         </Router>
       </AppContext.Provider>
