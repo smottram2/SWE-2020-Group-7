@@ -10,13 +10,13 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    @GetMapping("/accounts/{name}")
-    private Account getAccount(@PathVariable("name") String name){
-        return accountService.getAccount(name);
+    @GetMapping("/accounts/{accountId}")
+    private Account getAccount(@PathVariable("accountId") int accountId){
+        return accountService.getAccount(accountId);
     }
 
-    @PutMapping("/accounts/{name}")
-    public Account updateAccount(@PathVariable("name") String name, @RequestBody Account account){
-        return accountService.updateAccount(name, account);
+    @PutMapping("/accounts/{accountId}")
+    public Account updateAccount(@PathVariable("accountId") int accountId, @RequestBody Account account){
+        return accountService.updateAccount(accountId, account);
     }
 }

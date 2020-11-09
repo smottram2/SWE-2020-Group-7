@@ -9,11 +9,11 @@ public class AccountService {
     @Autowired
     AccountRepository accountRepository;
 
-    public Account getAccount(String name){
-         return accountRepository.findById(name).get();
+    public Account getAccount(int accountId){
+         return accountRepository.findById(accountId).get();
     }
 
-    public Account updateAccount(String name, Account account){
+    public Account updateAccount(int accountId, Account account){
         return accountRepository.save(account);
     }
 }

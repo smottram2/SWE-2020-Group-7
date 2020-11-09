@@ -1,14 +1,17 @@
 package com.example.demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
 
 @Entity
+@Table(name = "accounts" , schema = "dbo")
 public class Account {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int accountId;
     private String name;
     private double balance;
 
@@ -16,9 +19,18 @@ public class Account {
 
     }
 
-    public Account(String name, double balance) {
+    public Account(int accountId, String name, double balance) {
+        this.accountId = accountId;
         this.name = name;
         this.balance = balance;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
     public String getName() {
@@ -36,4 +48,9 @@ public class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE}, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
 }
