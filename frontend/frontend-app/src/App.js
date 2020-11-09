@@ -75,7 +75,6 @@ function App() {
                   </Route>
                 </>  
             }
-            
           </Switch>
         </Router>
       </AppContext.Provider>
