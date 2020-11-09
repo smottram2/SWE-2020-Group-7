@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AccountService {
+public class UserService {
 
     @Autowired
-    AccountRepository accountRepository;
+    UserRepository userRepository;
 
-    public Account getAccount(int accountId){
-         return accountRepository.findById(accountId).get();
+    public User getUser(int userId){
+         return userRepository.findById(userId).get();
     }
 
-    public Account updateAccount(int accountId, Account account){
-        return accountRepository.save(account);
+    public User updateUser(int userId, User user){
+        return userRepository.save(user);
     }
 }

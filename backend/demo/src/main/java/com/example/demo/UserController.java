@@ -5,18 +5,18 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-public class AccountController {
+public class UserController {
 
     @Autowired
-    AccountService accountService;
+    UserService userService;
 
-    @GetMapping("/accounts/{accountId}")
-    private Account getAccount(@PathVariable("accountId") int accountId){
-        return accountService.getAccount(accountId);
+    @GetMapping("/users/{userId}")
+    private User getUser(@PathVariable("userId") int userId){
+        return userService.getUser(userId);
     }
 
-    @PutMapping("/accounts/{accountId}")
-    public Account updateAccount(@PathVariable("accountId") int accountId, @RequestBody Account account){
-        return accountService.updateAccount(accountId, account);
+    @PutMapping("/users/{userId}")
+    public User updateUser(@PathVariable("userId") int userId, @RequestBody User user){
+        return userService.updateUser(userId, user);
     }
 }
