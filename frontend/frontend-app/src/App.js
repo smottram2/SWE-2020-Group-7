@@ -7,7 +7,7 @@ import Nav from "react-bootstrap/Nav";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Account from "./components/Account/Account";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 function App() {
   return (
@@ -47,10 +47,13 @@ function App() {
               <Register></Register>
             </div>
           </Route>
-          <Route path="/Account">
+          <Route path="/account">
             <div className="d-flex justify-content-center">
               <Account></Account>
             </div>
+          </Route>
+          <Route path="/">
+            <Redirect to="/account" />
           </Route>
         </Switch>
       </Router>
