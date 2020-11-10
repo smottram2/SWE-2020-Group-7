@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useState} from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "react-bootstrap/Navbar";
@@ -7,7 +7,7 @@ import Nav from "react-bootstrap/Nav";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Account from "./components/Account/Account";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory, Redirect } from "react-router-dom";
 import { AppContext } from "./libs/contextLib";
 
 function App() {
@@ -34,7 +34,6 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/">Home</Nav.Link>
             {isAuthenticated
             ? <Nav.Link href="/accounts">Accounts</Nav.Link>
             : <></>
@@ -61,6 +60,9 @@ function App() {
                       <Account></Account>
                     </div>
                   </Route>
+                  <Route path="/">
+                    <Redirect to="/accounts" />
+                  </Route>
                 </>
               : <>
                   <Route path="/login">
@@ -72,6 +74,9 @@ function App() {
                     <div className="d-flex justify-content-center">
                       <Register></Register>
                     </div>
+                  </Route>
+                  <Route path="/">
+                    <Redirect to="/login" />
                   </Route>
                 </>  
             }

@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
 import "./Account.css";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
+import TransactionModal from "../TransactionModal/TransactionModal";
 const getAccountEndpoint = "http://localhost:8080/accounts/";
 
 class Account extends Component {
@@ -123,6 +124,7 @@ class Account extends Component {
           <Card.Body>
             {/* <Card.Title>{checkingsAccount.accountType} Account</Card.Title> */}
             <Card.Text>
+              Balance
               <InputGroup className="mb-3">
                 <InputGroup.Prepend>
                   <InputGroup.Text>$</InputGroup.Text>
@@ -131,7 +133,22 @@ class Account extends Component {
                              value={checkingsAccount.accountBalance}/>
               </InputGroup>
             </Card.Text>
-            {/* <Button variant="primary">Go somewhere</Button> */}
+            {/* <Form onSubmit={this.handleWithdrawal}>
+              <Form.Group>
+                <Form.Label>Withdraw Money</Form.Label>
+                <Form.Control id="withdrawalAmount" type="number" 
+                              value={this.state.withdrawalAmount} 
+                              placeholder="Enter withdrawal amount"
+                              step="0.01"
+                              min="0" 
+                              max={this.state.accountBalance}
+                              onChange={this.handleChange}/>
+              </Form.Group>
+
+              <Button variant="primary" type="submit">
+                Withdraw
+              </Button>
+            </Form> */}
           </Card.Body>
         </Card>
         <br/>
@@ -140,6 +157,7 @@ class Account extends Component {
           <Card.Body>
             {/* <Card.Title>{savingsAccount.accountType} Account</Card.Title> */}
             <Card.Text>
+              Balance
               <InputGroup className="mb-3">
                 <InputGroup.Prepend>
                   <InputGroup.Text>$</InputGroup.Text>
@@ -148,7 +166,22 @@ class Account extends Component {
                              value={savingsAccount.accountBalance}/>
               </InputGroup>
             </Card.Text>
-            {/* <Button variant="primary">Go somewhere</Button> */}
+            {/* <Form onSubmit={this.handleWithdrawal}>
+              <Form.Group>
+                <Form.Label>Withdraw Money</Form.Label>
+                <Form.Control id="withdrawalAmount" type="number" 
+                              value={this.state.withdrawalAmount} 
+                              placeholder="Enter withdrawal amount"
+                              step="0.01"
+                              min="0" 
+                              max={this.state.accountBalance}
+                              onChange={this.handleChange}/>
+              </Form.Group>
+
+              <Button variant="primary" type="submit">
+                Withdraw
+              </Button>
+            </Form> */}
           </Card.Body>
         </Card>
         {/* <Form className="Form" onSubmit={this.handleSubmit}>
@@ -191,6 +224,7 @@ class Account extends Component {
             Withdraw
           </Button>
         </Form> */}
+        <TransactionModal></TransactionModal>
       </div>
     );
   }
