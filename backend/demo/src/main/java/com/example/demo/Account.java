@@ -9,24 +9,24 @@ public class Account {
 
     @Id
     @GeneratedValue
-    private String name;
+    private String accountName;
     private double balance;
 
-    public Account(){
-
-    }
-
-    public Account(String name, double balance) {
-        this.name = name;
+    public Account(String accountName, double balance) {
+        this.accountName = accountName;
         this.balance = balance;
     }
 
-    public String getName() {
-        return name;
+    public Account() {
+
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public double getBalance() {
@@ -36,4 +36,6 @@ public class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+
 }
