@@ -1,8 +1,11 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
 import "./Account.css";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import FormControl from "react-bootstrap/FormControl";
+import InputGroup from "react-bootstrap/InputGroup";
+import TransactionModal from "../TransactionModal/TransactionModal";
 const getAccountEndpoint = "http://localhost:8080/accounts/";
 
 class Account extends Component {
@@ -13,23 +16,75 @@ class Account extends Component {
       accountNumber: "",
       accountBalance: 0,
       withdrawalAmount: 0,
+      savingsAccount: {
+        accountType: "savings",
+        accountName: "",
+        accountBalance: 0,
+      },
+      checkingsAccount: {
+        accountType: "checking",
+        accountName: "",
+        accountBalance: 0,
+      }
     }
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(getAccountEndpoint + this.state.accountType);
-    fetch(getAccountEndpoint + this.state.accountType, {
+  componentDidMount() {
+    // GET CHECKINGS ACCOUNT
+    fetch(getAccountEndpoint + this.state.checkingsAccount.accountType, {
       method: 'GET',
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({ "accountBalance": data.balance });
+        this.setState(prevState => {
+          let checkingsAccount = Object.assign({}, prevState.checkingsAccount);
+          checkingsAccount.accountBalance = data.balance;               
+          return { checkingsAccount };
+        })
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+    // GET SAVINGS ACCOUNT
+    fetch(getAccountEndpoint + this.state.savingsAccount.accountType, {
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState(prevState => {
+          let savingsAccount = Object.assign({}, prevState.savingsAccount);
+          savingsAccount.accountBalance = data.balance;               
+          return { savingsAccount };
+        })
       })
       .catch((error) => {
         console.error('Error:', error);
       });
   }
+
+  refreshPage() {
+    window.location.reload();
+  }
+
+  transactionModalCallBack = () => {
+    this.refreshPage();
+  }
+
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(getAccountEndpoint + this.state.accountType);
+  //   fetch(getAccountEndpoint + this.state.accountType, {
+  //     method: 'GET',
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       this.setState({ "accountBalance": data.balance });
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error:', error);
+  //     });
+  // }
 
   handleWithdrawal = (e) => {
     e.preventDefault();
@@ -68,18 +123,88 @@ class Account extends Component {
   }
 
   render() {
-    const accountType = this.state.accountType;
-    const accountBalance = this.state.accountBalance;
+    const checkingsAccount = this.state.checkingsAccount;
+    const savingsAccount = this.state.savingsAccount;
     return (
       <div className="Account">
-        <Form className="Form" onSubmit={this.handleSubmit}>
-          {/* <Form.Group controlId="account_number">
-          <Form.Label>Select Your Account</Form.Label>
-          <Form.Control
-            type="account_number"
-            placeholder="must be 13 digits."
-          ></Form.Control>
-        </Form.Group> */}
+        <Card>
+          <Card.Header>{checkingsAccount.accountType}</Card.Header>
+          <Card.Body>
+            {/* <Card.Title>{checkingsAccount.accountType} Account</Card.Title> */}
+            Balance
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+                <InputGroup.Text>$</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl aria-label="Amount (to the nearest dollar)"
+                            value={checkingsAccount.accountBalance}
+                            readOnly/>
+            </InputGroup>
+            {/* <Form onSubmit={this.handleWithdrawal}>
+              <Form.Group>
+                <Form.Label>Withdraw Money</Form.Label>
+                <Form.Control id="withdrawalAmount" type="number" 
+                              value={this.state.withdrawalAmount} 
+                              placeholder="Enter withdrawal amount"
+                              step="0.01"
+                              min="0" 
+                              max={this.state.accountBalance}
+                              onChange={this.handleChange}/>
+              </Form.Group>
+
+              <Button variant="primary" type="submit">
+                Withdraw
+              </Button>
+            </Form> */}
+          </Card.Body>
+          <Card.Footer>
+            <TransactionModal callbackFromParent={this.transactionModalCallBack}
+                              accountName={this.state.checkingsAccount.accountName} 
+                              accountBalance={this.state.checkingsAccount.accountBalance}  
+                              accountType={this.state.checkingsAccount.accountType}>
+            </TransactionModal>
+          </Card.Footer>
+        </Card>
+        <br/>
+        <Card>
+          <Card.Header>{savingsAccount.accountType}</Card.Header>
+          <Card.Body>
+            {/* <Card.Title>{savingsAccount.accountType} Account</Card.Title> */}
+            Balance
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+                <InputGroup.Text>$</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl aria-label="Amount (to the nearest dollar)"
+                            value={savingsAccount.accountBalance}
+                            readOnly/>
+            </InputGroup>
+            {/* <Form onSubmit={this.handleWithdrawal}>
+              <Form.Group>
+                <Form.Label>Withdraw Money</Form.Label>
+                <Form.Control id="withdrawalAmount" type="number" 
+                              value={this.state.withdrawalAmount} 
+                              placeholder="Enter withdrawal amount"
+                              step="0.01"
+                              min="0" 
+                              max={this.state.accountBalance}
+                              onChange={this.handleChange}/>
+              </Form.Group>
+
+              <Button variant="primary" type="submit">
+                Withdraw
+              </Button>
+            </Form> */}
+          </Card.Body>
+          <Card.Footer>
+            <TransactionModal callbackFromParent={this.transactionModalCallBack}
+                              accountName={this.state.savingsAccount.accountName} 
+                              accountBalance={this.state.savingsAccount.accountBalance}  
+                              accountType={this.state.savingsAccount.accountType}>
+            </TransactionModal>
+          </Card.Footer>
+        </Card>
+        {/* <Form className="Form" onSubmit={this.handleSubmit}>
           <Form.Group controlId="accountType">
             <Form.Label>Select Your Account Type</Form.Label>
             <Form.Control as="select" onChange={this.handleChange} value={this.state.accountType} >
@@ -106,7 +231,8 @@ class Account extends Component {
         <Form onSubmit={this.handleWithdrawal}>
           <Form.Group>
             <Form.Label>Withdraw Money</Form.Label>
-            <Form.Control id="withdrawalAmount" type="number" value={this.state.withdrawalAmount} 
+            <Form.Control id="withdrawalAmount" type="number" 
+                          value={this.state.withdrawalAmount} 
                           placeholder="Enter withdrawal amount"
                           step="0.01"
                           min="0" 
@@ -117,7 +243,8 @@ class Account extends Component {
           <Button variant="primary" type="submit">
             Withdraw
           </Button>
-        </Form>
+        </Form> */}
+        
       </div>
     );
   }

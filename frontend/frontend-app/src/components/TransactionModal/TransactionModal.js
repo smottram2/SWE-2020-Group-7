@@ -31,11 +31,12 @@ class TransactionModal extends Component {
   }
 
   handleClose = () => {
-      this.setState({"show": false})
+      this.setState({"show": false});
+      this.props.callbackFromParent();
   }
 
   handleShow = () => {
-      this.setState({"show": true})
+      this.setState({"show": true});
   }
 
   handleWithdrawal = (e) => {
@@ -47,7 +48,7 @@ class TransactionModal extends Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({"name": this.props.accountType, "balance": this.props.accountBalance - parseInt(this.state.withdrawalAmount)})
+      body: JSON.stringify({"name": this.props.accountType, "balance": this.props.accountBalance - parseFloat(this.state.withdrawalAmount)})
     })
       .then(response => response.json())
       .then(data => {
@@ -69,7 +70,7 @@ class TransactionModal extends Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({"name": this.props.accountType, "balance": this.props.accountBalance + parseInt(this.state.depositAmount)})
+      body: JSON.stringify({"name": this.props.accountType, "balance": this.props.accountBalance + parseFloat(this.state.depositAmount)})
     })
       .then(response => response.json())
       .then(data => {
@@ -92,7 +93,7 @@ class TransactionModal extends Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({"name": this.props.accountType, "balance": this.props.accountBalance - parseInt(this.state.transferAmount)})
+      body: JSON.stringify({"name": this.props.accountType, "balance": this.props.accountBalance - parseFloat(this.state.transferAmount)})
     })
       .then(response => response.json())
       .then(data => {
@@ -108,7 +109,7 @@ class TransactionModal extends Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({"name": this.state.transferAccountType, "balance": this.state.transferAccountBalance + parseInt(this.state.transferAmount)})
+      body: JSON.stringify({"name": this.state.transferAccountType, "balance": this.state.transferAccountBalance + parseFloat(this.state.transferAmount)})
     })
       .then(response => response.json())
       .then(data => {
