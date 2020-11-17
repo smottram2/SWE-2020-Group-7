@@ -7,22 +7,23 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
     CustomerService customerService;
 
-    @PutMapping("/customers/")
+    @PostMapping("")
     public Customer createCustomer(@RequestBody Customer customer){
         return customerService.createCustomer(customer);
     }
 
-    @GetMapping("/customers/{firstName}")
+    @GetMapping("/{firstName}")
     private Optional<Customer> getCustomer(@PathVariable("firstName") String firstName){
         return customerService.getCustomer(firstName);
     }
 
-    @PutMapping("/customers/newCustomer")
+    @PutMapping("/{firstName}")
     public Customer updateCustomer(@PathVariable("firstName") String firstName, @RequestBody Customer customer){
         return customerService.updateCustomer(firstName, customer);
     }

@@ -15,11 +15,13 @@ public class CustomerService {
          return customerRepository.findById(firstName);
     }
 
+    public Customer createCustomer(Customer customer){
+        return customerRepository.save(customer);
+    }
+
     public Customer updateCustomer(String firstName, Customer customer){
         return customerRepository.save(customer);
     }
 
-    public Customer createCustomer(Customer customer){
-        return customerRepository.save(customer);
-    }
+
 }
