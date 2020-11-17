@@ -123,16 +123,15 @@ class Account extends Component {
           <Card.Header>{checkingsAccount.accountType}</Card.Header>
           <Card.Body>
             {/* <Card.Title>{checkingsAccount.accountType} Account</Card.Title> */}
-            <Card.Text>
-              Balance
-              <InputGroup className="mb-3">
-                <InputGroup.Prepend>
-                  <InputGroup.Text>$</InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl aria-label="Amount (to the nearest dollar)"
-                             value={checkingsAccount.accountBalance}/>
-              </InputGroup>
-            </Card.Text>
+            Balance
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+                <InputGroup.Text>$</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl aria-label="Amount (to the nearest dollar)"
+                            value={checkingsAccount.accountBalance}
+                            readOnly/>
+            </InputGroup>
             {/* <Form onSubmit={this.handleWithdrawal}>
               <Form.Group>
                 <Form.Label>Withdraw Money</Form.Label>
@@ -150,22 +149,27 @@ class Account extends Component {
               </Button>
             </Form> */}
           </Card.Body>
+          <Card.Footer>
+            <TransactionModal accountName={this.state.checkingsAccount.accountName} 
+                              accountBalance={this.state.checkingsAccount.accountBalance}  
+                              accountType={this.state.checkingsAccount.accountType}>
+            </TransactionModal>
+          </Card.Footer>
         </Card>
         <br/>
         <Card>
           <Card.Header>{savingsAccount.accountType}</Card.Header>
           <Card.Body>
             {/* <Card.Title>{savingsAccount.accountType} Account</Card.Title> */}
-            <Card.Text>
-              Balance
-              <InputGroup className="mb-3">
-                <InputGroup.Prepend>
-                  <InputGroup.Text>$</InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl aria-label="Amount (to the nearest dollar)"
-                             value={savingsAccount.accountBalance}/>
-              </InputGroup>
-            </Card.Text>
+            Balance
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+                <InputGroup.Text>$</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl aria-label="Amount (to the nearest dollar)"
+                            value={savingsAccount.accountBalance}
+                            readOnly/>
+            </InputGroup>
             {/* <Form onSubmit={this.handleWithdrawal}>
               <Form.Group>
                 <Form.Label>Withdraw Money</Form.Label>
@@ -183,6 +187,12 @@ class Account extends Component {
               </Button>
             </Form> */}
           </Card.Body>
+          <Card.Footer>
+            <TransactionModal accountName={this.state.savingsAccount.accountName} 
+                              accountBalance={this.state.savingsAccount.accountBalance}  
+                              accountType={this.state.savingsAccount.accountType}>
+            </TransactionModal>
+          </Card.Footer>
         </Card>
         {/* <Form className="Form" onSubmit={this.handleSubmit}>
           <Form.Group controlId="accountType">
@@ -224,7 +234,7 @@ class Account extends Component {
             Withdraw
           </Button>
         </Form> */}
-        <TransactionModal></TransactionModal>
+        
       </div>
     );
   }
