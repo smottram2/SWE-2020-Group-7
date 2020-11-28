@@ -21,7 +21,7 @@ function App() {
   return (
     <div>
       <Navbar bg="light" expand="lg" className="mb-4">
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/authentication">
           <img
             src={logo}
             width="30"
@@ -60,7 +60,7 @@ function App() {
                       <Account></Account>
                     </div>
                   </Route>
-                  <Route path="/">
+                  <Route path="/authentication">
                     <Redirect to="/accounts" />
                   </Route>
                 </>
@@ -75,7 +75,7 @@ function App() {
                       <Register></Register>
                     </div>
                   </Route>
-                  <Route path="/">
+                  <Route path="/authentication">
                     <Redirect to="/login" />
                   </Route>
                 </>  
