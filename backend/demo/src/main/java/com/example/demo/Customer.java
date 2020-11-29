@@ -1,11 +1,15 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 public class Customer {
 
-    public Customer(double checkingAccountBalance, String email, String firstName, String lastName, String password, String phoneNumber, double savingsAccountBalance) {
+    public Customer(BigDecimal checkingAccountBalance, String email, String firstName, String lastName, String password, String phoneNumber, BigDecimal savingsAccountBalance) {
         this.checkingAccountBalance = checkingAccountBalance;
         this.email = email;
         this.firstName = firstName;
@@ -32,10 +36,10 @@ public class Customer {
     private String password;
 
     @Column(name = "checkingAccountBalance")
-    private double checkingAccountBalance;
+    private BigDecimal checkingAccountBalance;
 
     @Column(name = "savingsAccountBalance")
-    private double savingsAccountBalance;
+    private BigDecimal savingsAccountBalance;
 
 
     public String getFirstName() {
@@ -78,23 +82,24 @@ public class Customer {
         this.password = password;
     }
 
-    public double getCheckingAccountBalance() {
+    public BigDecimal getCheckingAccountBalance() {
         return checkingAccountBalance;
     }
 
-    public void setCheckingAccountBalance(double checkingAccountBalance) {
+    public void setCheckingAccountBalance(BigDecimal checkingAccountBalance) {
         this.checkingAccountBalance = checkingAccountBalance;
     }
 
-    public double getSavingsAccountBalance() {
+    public BigDecimal getSavingsAccountBalance() {
         return savingsAccountBalance;
     }
 
-    public void setSavingsAccountBalance(double savingsAccountBalance) {
+    public void setSavingsAccountBalance(BigDecimal savingsAccountBalance) {
         this.savingsAccountBalance = savingsAccountBalance;
     }
 
-    public Customer() {
+    @OneToMany(mappedBy = "customer")
+    @JsonManagedReference(value = "customerTransaction")
+    private Set<Transaction> customerTransactions;
 
-    }
 }
