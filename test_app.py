@@ -209,6 +209,7 @@ def test_transfer_money_savings_to_checking_greater_than_balance(test_client):
     assert response.status_code == 400
     assert "Transfer Unsucessful. Transfer amount exceeds origin account balance." in response.get_data(as_text=True)
 
+
 def test_transaction_record_creation_when_transaction_occurs(test_client):
     response1 = test_client.get("/transactions/checking?uid=nligsz1JQcXTlys08mO8qup7HZo2")
     
@@ -226,3 +227,41 @@ def test_transaction_record_creation_when_transaction_occurs(test_client):
 
     assert response2.status_code == 200
     assert len(response2.json.keys()) == (len(response1.json.keys()) + 1)
+
+
+def test_payment_from_checking_equal_to_balance(test_client):
+    test_client.post("/account/checking/deposit", 
+                     data=json.dumps({"uid": "nligsz1JQcXTlys08mO8qup7HZo2",
+                                      "amount": 100}),
+                     content_type="application/json")
+
+    response = test_client.post("/account/checking/payment",
+                     data=json.dumps({"uid": "nligsz1JQcXTlys08mO8qup7HZo2",
+                                      "amount": 100,
+                                      "to_acct": "ETSY Seller #1234"}),
+                     content_type="application/json")
+
+    assert response.status_code == 200
+    assert "Payment Successful" in response.get_data(as_text=True)
+
+
+def test_payment_from_checking_greater_than_balance(test_client):
+    response = test_client.post("/account/checking/payment",
+                     data=json.dumps({"uid": "nligsz1JQcXTlys08mO8qup7HZo2",
+                                      "amount": 100,
+                                      "to_acct": "ETSY Seller #1234"}),
+                     content_type="application/json")
+
+    assert response.status_code == 400
+    assert "Payment Unsucessful. Payment amount exceeds account balance." in response.get_data(as_text=True)
+
+
+def test_payment_from_checking_negative_amount(test_client):
+    response = test_client.post("/account/checking/payment",
+                     data=json.dumps({"uid": "nligsz1JQcXTlys08mO8qup7HZo2",
+                                      "amount": -100,
+                                      "to_acct": "ETSY Seller #1234"}),
+                     content_type="application/json")
+
+    assert response.status_code == 400
+    assert "Payment Unsucessful. Payment amount cannot be negative." in response.get_data(as_text=True)

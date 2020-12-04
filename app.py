@@ -192,6 +192,9 @@ def payment(account_name):
     to_acct = request.json["to_acct"]
     current_balance = db.child("users").child(uid).child("accounts").child(account_name).child("balance").get().val()
 
+    if amount < 0:
+        return "Payment Unsucessful. Payment amount cannot be negative.", 400
+
     new_balance = current_balance - amount
     if new_balance >= 0:
         db.child("users").child(uid).child("accounts").child(account_name).child("balance").set(new_balance)
