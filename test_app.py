@@ -245,6 +245,22 @@ def test_payment_from_checking_equal_to_balance(test_client):
     assert "Payment Successful" in response.get_data(as_text=True)
 
 
+def test_payment_from_savings_equal_to_balance(test_client):
+    test_client.post("/account/savings/deposit", 
+                     data=json.dumps({"uid": "nligsz1JQcXTlys08mO8qup7HZo2",
+                                      "amount": 100}),
+                     content_type="application/json")
+
+    response = test_client.post("/account/savings/payment",
+                     data=json.dumps({"uid": "nligsz1JQcXTlys08mO8qup7HZo2",
+                                      "amount": 100,
+                                      "to_acct": "ETSY Seller #1234"}),
+                     content_type="application/json")
+
+    assert response.status_code == 200
+    assert "Payment Successful" in response.get_data(as_text=True)
+
+
 def test_payment_from_checking_greater_than_balance(test_client):
     response = test_client.post("/account/checking/payment",
                      data=json.dumps({"uid": "nligsz1JQcXTlys08mO8qup7HZo2",
@@ -256,8 +272,30 @@ def test_payment_from_checking_greater_than_balance(test_client):
     assert "Payment Unsucessful. Payment amount exceeds account balance." in response.get_data(as_text=True)
 
 
+def test_payment_from_savings_greater_than_balance(test_client):
+    response = test_client.post("/account/savings/payment",
+                     data=json.dumps({"uid": "nligsz1JQcXTlys08mO8qup7HZo2",
+                                      "amount": 100,
+                                      "to_acct": "ETSY Seller #1234"}),
+                     content_type="application/json")
+
+    assert response.status_code == 400
+    assert "Payment Unsucessful. Payment amount exceeds account balance." in response.get_data(as_text=True)
+
+
 def test_payment_from_checking_negative_amount(test_client):
     response = test_client.post("/account/checking/payment",
+                     data=json.dumps({"uid": "nligsz1JQcXTlys08mO8qup7HZo2",
+                                      "amount": -100,
+                                      "to_acct": "ETSY Seller #1234"}),
+                     content_type="application/json")
+
+    assert response.status_code == 400
+    assert "Payment Unsucessful. Payment amount cannot be negative." in response.get_data(as_text=True)
+
+
+def test_payment_from_savings_negative_amount(test_client):
+    response = test_client.post("/account/savings/payment",
                      data=json.dumps({"uid": "nligsz1JQcXTlys08mO8qup7HZo2",
                                       "amount": -100,
                                       "to_acct": "ETSY Seller #1234"}),
