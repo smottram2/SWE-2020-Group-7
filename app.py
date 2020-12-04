@@ -123,6 +123,9 @@ def transfer(account_name):
     new_balance_from_acct = current_balance_from_acct - amount
     new_balance_to_acct = current_balance_to_acct + amount
 
+    if amount < 0:
+        return "Transfer Unsuccessful. Transfer amount cannot be negative", 400
+
     if new_balance_from_acct >= 0:
         db.child("users").child(uid).child("accounts").child(account_name).child("balance").set(new_balance_from_acct)
         db.child("users").child(uid).child("accounts").child(to_acct_name).child("balance").set(new_balance_to_acct)
